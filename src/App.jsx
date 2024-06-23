@@ -1,12 +1,13 @@
 import { useState } from 'react'
-import Deck from './DeckWrapper'
+
+import DeckWrapper from './DeckWrapper'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-     <Deck/>
+     <DeckWrapper/>
     </>
   )
 }
