@@ -7,22 +7,17 @@ const DeckWrapper = () =>{
     const deckRef = useRef()
     //setting the Deck
     useEffect(() => {
-        async function getDeck (){ 
-            try{
-                const {data} = await axios({
+          axios({
                 method: "get",
                 url: "https://deckofcardsapi.com/api/deck/new/shuffle/"
                     })
-                setDeck(data);
-                
-            }
-            catch(error){
-                console.error("error fetching back of deck:", error);
-            }
+                    .then(response => {setDeck(response.data)  })
+                    .catch(error =>  console.error("error fetching back of deck:", error))
+    
         } 
-        getDeck()
-        console.log(deck)
-    }, []);
+        // getDeck()
+        // console.log(deck)
+        , []);
         console.log(deck);
     
     //drawingCard
