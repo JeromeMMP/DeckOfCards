@@ -5,6 +5,7 @@ import Card from "./Card";
 const DeckWrapper = () =>{
   const [deck, setDeck] = useState(null);
   const [cards, setCards] = useState([])
+  const [shuffling, setShuffling] = useState(false)
   const deckRef = useRef()
     //setting the Deck
     useEffect(() => {
@@ -50,6 +51,27 @@ const DeckWrapper = () =>{
       getCard()
       }
     }
+
+    // shuffleDeck 
+    async function shuffleDeck(){
+      setShuffling(true)
+      try{
+        const shuffleResponse = await axios({
+        method: "POST",
+        url:`https://deckofcardsapi.com/api/deck/${deckRef.current}/shuffle/`
+            })
+        setCards([])
+      }
+      catch(error){
+          console.error("error shuffling cards:", error);
+      }
+      finally{
+        setShuffling(false)
+      }
+    }
+      
+
+    
     
 
 
@@ -58,7 +80,8 @@ const DeckWrapper = () =>{
     <div>
       {deck ? <img src='https://deckofcardsapi.com/static/img/back.png' alt="DeckOfCards" />  : <h1> Loading ...</h1>}
       <button onClick={drawCard}> DRAW CARD</button>
-      
+      <button onClick={shuffleDeck}
+      disabled={shuffling}>Shuffle Deck</button>
       <div className="CardArea">{cards.map(card => <Card key={card.info.code} imgSrc={card.info.image}/>)}</div>
     </div>
     )
