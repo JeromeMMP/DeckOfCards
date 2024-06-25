@@ -1,6 +1,8 @@
 import React,{useState, useEffect, useRef}  from "react";
 import axios from 'axios';
-import Card from "./Card";
+import Card from "./Card.jsx";
+import "./Card.css";
+import "./deckWrapper.css"
 
 const DeckWrapper = () =>{
   const [deck, setDeck] = useState(null);
@@ -17,9 +19,6 @@ const DeckWrapper = () =>{
                       deckRef.current = response.data.deck_id
                       })
                     .catch(error =>  console.error("error fetching back of deck:", error));
-          
-          console.log(deck)
-          console.log(deckRef.current)
         } 
         , []);
     
@@ -78,11 +77,13 @@ const DeckWrapper = () =>{
 
     return( 
     <div>
-      {deck ? <img src='https://deckofcardsapi.com/static/img/back.png' alt="DeckOfCards" />  : <h1> Loading ...</h1>}
-      <button onClick={drawCard}> DRAW CARD</button>
-      <button onClick={shuffleDeck}
+      <button className="Buttons" onClick={drawCard}> DRAW CARD</button>
+      <button className="Buttons" onClick={shuffleDeck}
       disabled={shuffling}>Shuffle Deck</button>
-      <div className="CardArea">{cards.map(card => <Card key={card.info.code} imgSrc={card.info.image}/>)}</div>
+      <br />
+      {deck ? <img src='https://deckofcardsapi.com/static/img/back.png' alt="DeckOfCards" />  : <h1> Loading ...</h1>}
+     
+      <div className="card-area">{cards.map(card => <Card key={card.info.code} imgSrc={card.info.image}/>)}</div>
     </div>
     )
 }
